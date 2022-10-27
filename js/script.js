@@ -6,44 +6,44 @@ const city = "London";
 weatherBlock.innerHTML = `<div class="info">Enter the name of the city</div>`;
 
 const loading = (box) => {
-	box.innerHTML = `
+  box.innerHTML = `
   <div class="loading">
     loading
   </div>`;
 };
 
 const loadWeather = async (e) => {
-	loading(weatherBlock);
+  loading(weatherBlock);
 
-	const server = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput.value}&appid=${API_KEY}&units=metric`;
+  const server = `https://api.openweathermap.org/data/2.5/weather?q=${searchInput.value}&appid=${API_KEY}&units=metric`;
 
-	const response = await fetch(server, {
-		method: "GET",
-	});
-	const responseResult = await response.json();
+  const response = await fetch(server, {
+    method: "GET",
+  });
+  const responseResult = await response.json();
 
-	if (response.ok) {
-		getWeather(responseResult);
-	} else {
-		weatherBlock.innerHTML = responseResult.message;
-	}
+  if (response.ok) {
+    getWeather(responseResult);
+  } else {
+    weatherBlock.innerHTML = responseResult.message;
+  }
 };
 
 const getWeather = (data) => {
-	console.log(data);
+  console.log(data);
 
-	const location = data.name;
-	const tempMax = Math.round(data.main.temp_max);
-	const temp = Math.round(data.main.temp);
-	const tempMin = Math.round(data.main.temp_min);
-	const feelLike = Math.round(data.main.feels_like);
-	const weatherStatus = data.weather[0].main;
-	const weatherIcon = data.weather[0].icon;
-	const windSpeed = data.wind.speed;
-	const windDirection = data.wind.deg;
-	const clouds = data.clouds.all;
+  const location = data.name;
+  const tempMax = Math.round(data.main.temp_max);
+  const temp = Math.round(data.main.temp);
+  const tempMin = Math.round(data.main.temp_min);
+  const feelLike = Math.round(data.main.feels_like);
+  const weatherStatus = data.weather[0].main;
+  const weatherIcon = data.weather[0].icon;
+  const windSpeed = data.wind.speed;
+  const windDirection = data.wind.deg;
+  const clouds = data.clouds.all;
 
-	const template = `
+  const template = `
 	<div class="weather__inner">
 		<div class="weather__header">
 			<div class="weather__main">
@@ -66,13 +66,13 @@ const getWeather = (data) => {
 	</div>
 	`;
 
-	weatherBlock.innerHTML = template;
+  weatherBlock.innerHTML = template;
 };
 
 searchInput.addEventListener("keypress", (e) => {
-	if (e.key === "Enter") {
-		if (weatherBlock) {
-			loadWeather();
-		}
-	}
+  if (e.key === "Enter") {
+    if (weatherBlock) {
+      loadWeather();
+    }
+  }
 });
